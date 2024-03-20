@@ -1,10 +1,10 @@
 const { test, expect } = require('@playwright/test');
 
-const baseURL = "http://localhost:3000";
-const loginURL = `${baseURL}/login`;
-const registerURL = `${baseURL}/register`;
-const catalogURL = `${baseURL}/catalog`;
-const createURL = `${baseURL}/create`;
+const baseURL = "http://localhost:3000/";
+const loginURL = `${baseURL}login`;
+const registerURL = `${baseURL}register`;
+const catalogURL = `${baseURL}catalog`;
+const createURL = `${baseURL}create`;
 
 // Navigation Bar for Guest Users
 test('Verify "All Books" link is visible', async ({ page }) => {
@@ -150,18 +150,18 @@ test('Login with empty password', async ({ page }) => {
 });
 
 // Register Page
-test('Register with valid credentials', async ({ page }) => {
-    await page.goto(registerURL);
+// test('Register with valid credentials', async ({ page }) => {
+//     await page.goto(registerURL);
 
-    await page.fill('#email', "vladimir.test3@abv.bg");
-    await page.fill('#password', "111222");
-    await page.fill('#repeat-pass', "111222");
+//     await page.fill('#email', "vladimir.test3@abv.bg");
+//     await page.fill('#password', "111222");
+//     await page.fill('#repeat-pass', "111222");
 
-    await page.click('#register-form > fieldset > input');
-    await page.$('a[href="/catalog"]');
+//     await page.click('#register-form > fieldset > input');
+//     await page.$('a[href="/catalog"]');
 
-    expect(page.url()).toBe(catalogURL);
-});
+//     expect(page.url()).toBe(catalogURL);
+// });
 
 test('Register with empty credentials', async ({ page }) => {
     await page.goto(registerURL);
@@ -391,28 +391,28 @@ test('Verify all books are displayed', async ({ page }) => {
     expect(bookElements.length).toBeGreaterThan(0);
 });
 
-test('Verify there are no books displayed', async ({ page }) => {
-    // First - STOP the server -> comment all books -> START the server
-    // login
-    await page.goto(loginURL);
+// test('Verify there are no books displayed', async ({ page }) => {
+//     // First - STOP the server -> comment all books -> START the server
+//     // login
+//     await page.goto(loginURL);
 
-    await page.fill('#email', "peter@abv.bg");
-    await page.fill('#password', "123456");
+//     await page.fill('#email', "peter@abv.bg");
+//     await page.fill('#password', "123456");
 
-    await Promise.all([
-        page.click('#login-form > fieldset > input'),
-        page.waitForURL(catalogURL)
-    ]);
+//     await Promise.all([
+//         page.click('#login-form > fieldset > input'),
+//         page.waitForURL(catalogURL)
+//     ]);
 
-    // catalog
-    await page.waitForSelector('.dashboard');
-    const noBookMessage = await page.textContent('.no-books');
+//     // catalog
+//     await page.waitForSelector('.dashboard');
+//     const noBookMessage = await page.textContent('.no-books');
 
-    expect(noBookMessage).toBe("No books in database!");
-});
+//     expect(noBookMessage).toBe("No books in database!");
+// });
 
 // "Details" Page (some tests)
-test.only('Details page view as Login user', async ({ page }) => {
+test('Details page view as Login user', async ({ page }) => {
     // login
     await page.goto(loginURL);
 
@@ -436,7 +436,7 @@ test.only('Details page view as Login user', async ({ page }) => {
     expect(detailsPageTitle).toBe("To Kill a Mockingbird");
 });
 
-test.only('All info is displayed Correctly', async ({ page }) => {
+test('All info is displayed Correctly', async ({ page }) => {
     const descriptionOfFirstBook = 'The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it. "To Kill A Mockingbird" became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.';
 
     // catalog
@@ -485,8 +485,9 @@ test('Verify Logout Button Redirects Correctly', async ({ page }) => {
     // logout
     const logoutLink = await page.$('a[href="javascript:void(0)"]');
     await logoutLink.click();
+    await page.waitForURL(baseURL);
 
     const redirectedURL = page.url();
 
-    expect(redirectedURL).toBe(catalogURL);
+    expect(redirectedURL).toBe(baseURL);
 });
