@@ -23,8 +23,14 @@ jobs:
     - name: Install package.json dependencies
       run: npm install
     - name: Start BackEnd
-      run: npm run start-be
+      run: npm run start-be &
+    - name: Sleep for 3 seconds
+      run: sleep 3
     - name: Start FrontEnd
-      run: npm run start-fe
+      run: npm run start-fe &
+    - name: Sleep for 3 seconds
+      run: sleep 3
+    - name: Install Playwright browsers
+      run: npx playwright install
     - name: Execute Playwrigth UI tests
       run: npm run start-ui
