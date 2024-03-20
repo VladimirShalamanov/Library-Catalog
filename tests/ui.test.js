@@ -1,10 +1,10 @@
 const { test, expect } = require('@playwright/test');
 
-const baseURL = "http://localhost:3000";
-const loginURL = `${baseURL}/login`;
-const registerURL = `${baseURL}/register`;
-const catalogURL = `${baseURL}/catalog`;
-const createURL = `${baseURL}/create`;
+const baseURL = "http://localhost:3000/";
+const loginURL = `${baseURL}login`;
+const registerURL = `${baseURL}register`;
+const catalogURL = `${baseURL}catalog`;
+const createURL = `${baseURL}create`;
 
 // Navigation Bar for Guest Users
 test('Verify "All Books" link is visible', async ({ page }) => {
@@ -154,6 +154,7 @@ test('Login with empty password', async ({ page }) => {
 //     await page.goto(registerURL);
 
 //     // Change email
+
 //     await page.fill('#email', "vladimir.test3@abv.bg");
 //     await page.fill('#password', "111222");
 //     await page.fill('#repeat-pass', "111222");
@@ -486,8 +487,9 @@ test('Verify Logout Button Redirects Correctly', async ({ page }) => {
     // logout
     const logoutLink = await page.$('a[href="javascript:void(0)"]');
     await logoutLink.click();
+    await page.waitForURL(baseURL);
 
     const redirectedURL = page.url();
 
-    expect(redirectedURL).toBe(catalogURL);
+    expect(redirectedURL).toBe(baseURL);
 });
