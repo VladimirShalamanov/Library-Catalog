@@ -153,6 +153,8 @@ test('Login with empty password', async ({ page }) => {
 // test('Register with valid credentials', async ({ page }) => {
 //     await page.goto(registerURL);
 
+//     // Change email
+
 //     await page.fill('#email', "vladimir.test3@abv.bg");
 //     await page.fill('#password', "111222");
 //     await page.fill('#repeat-pass', "111222");
