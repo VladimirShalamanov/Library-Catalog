@@ -1,0 +1,1 @@
+[![Build Test Deploy](https://github.com/VladimirShalamanov/Library-Catalog/actions/workflows/pipeline.yml/badge.svg)](https://github.com/VladimirShalamanov/Library-Catalog/actions/workflows/pipeline.yml)
